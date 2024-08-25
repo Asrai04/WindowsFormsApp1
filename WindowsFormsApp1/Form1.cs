@@ -34,6 +34,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             new Configuracion();
+            Configuracion.Direcciones = "derecha";
         }
 
         private void KeyDOWN(object sender, KeyEventArgs e)
@@ -216,7 +217,7 @@ namespace WindowsFormsApp1
             score = 0;
             txtScore.Text = "Score: " + score;
 
-            MOTO moto = new MOTO { X = 10, Y = 5 };
+            MOTO moto = new MOTO { X = 2, Y = 2 };
             Jugador.Add(moto); // crear la moto
 
             for (int i = 0; i < 50; i++)
