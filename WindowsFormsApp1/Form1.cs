@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,9 @@ namespace WindowsFormsApp1
     {
 
         private List<MOTO> Jugador = new List<MOTO>();
+        private List<MOTO> BOT1 = new List<MOTO>();
         private MOTO Powerup = new MOTO();
+        private MOTO Powerup_tiempo = new MOTO();
 
 
         int MaxWidth;
@@ -26,8 +29,7 @@ namespace WindowsFormsApp1
 
         Random rand = new Random();
 
-        bool Izquierda, Derecha, Arriba, Abajo;
-
+        bool Izquierda, Derecha, Arriba, Abajo, tempo_lento, moto_viva;
 
         public Form1()
         {
@@ -35,7 +37,10 @@ namespace WindowsFormsApp1
 
             new Configuracion();
             Configuracion.Direcciones = "derecha";
+            BOT1C.Direcciones = "izquierda";
         }
+
+        BotConfig BOT1C = new BotConfig();
 
         private void KeyDOWN(object sender, KeyEventArgs e)
         {
@@ -84,6 +89,26 @@ namespace WindowsFormsApp1
 
         private void Timer_Juego(object sender, EventArgs e)
         {
+            int d = rand.Next(1, 100);
+            int ultimo = 0;
+            if (d == 1)
+            {
+                BOT1C.Direcciones = "izquierda";
+            }
+            else if (d == 2)
+            {
+                BOT1C.Direcciones = "derecha";
+            }
+            else if (d == 3)
+            {
+                BOT1C.Direcciones = "abajo";
+            }
+            else if (d == 4)
+            {
+                BOT1C.Direcciones = "arriba";
+            }
+            
+            
             if (Izquierda)
             {
                 Configuracion.Direcciones = "izquierda";
@@ -103,7 +128,7 @@ namespace WindowsFormsApp1
 
             for (int i = Jugador.Count - 1; i >= 0; i--)
             {
-                if (i == 0)
+                if (i == 0 && moto_viva == false)
                 {
                     switch (Configuracion.Direcciones)
                     {
@@ -143,6 +168,20 @@ namespace WindowsFormsApp1
                     {
                         CrecerStela();
                     }
+                    if (Jugador[i].X == Powerup_tiempo.X && Jugador[i].Y == Powerup_tiempo.Y)
+                    {
+                        if (tempo_lento == false)
+                        {
+                            Timer_del_juego.Interval = 80;
+                            tempo_lento = true;
+                        }
+                        else
+                        {
+                            Timer_del_juego.Interval = 40;
+                            tempo_lento = false;
+                        }
+                        Powerup_tiempo = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+                    }
 
                     for (int j = 1; j < Jugador.Count; j++)
                     {
@@ -150,17 +189,27 @@ namespace WindowsFormsApp1
                         if (Jugador[i].X == Jugador[j].X && Jugador[i].Y == Jugador[j].Y)
                         {
                             GAMEOVER();
+                            moto_viva = true;
                         }
-
                     }
-
-
                 }
-                else
+                else if (moto_viva == false)
                 {
                     Jugador[i].X = Jugador[i - 1].X;
                     Jugador[i].Y = Jugador[i - 1].Y;
-                } 
+                }
+                else
+                {
+                    if (ultimo <= Jugador.Count - 1)
+                    {
+                        Jugador[ultimo].destruirse();
+                        ultimo++;
+                    }
+                    else
+                    {
+                        Timer_del_juego.Stop();
+                    }
+                }
             }
 
             Fondo_Juego.Invalidate();   
@@ -196,6 +245,7 @@ namespace WindowsFormsApp1
                     ));
             }
 
+
             canvas.FillEllipse(Brushes.DarkRed, new Rectangle
                     (
                     Powerup.X * Configuracion.Ancho,
@@ -204,7 +254,17 @@ namespace WindowsFormsApp1
                     Configuracion.Largo
                     ));
 
+            canvas.FillEllipse(Brushes.DarkGreen, new Rectangle
+                    (
+                    Powerup_tiempo.X * Configuracion.Ancho,
+                    Powerup_tiempo.Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
+
         }
+
+        
 
         private void Restart()
         {
@@ -218,15 +278,20 @@ namespace WindowsFormsApp1
             txtScore.Text = "Score: " + score;
 
             MOTO moto = new MOTO { X = 2, Y = 2 };
+            MOTO enemigo1 = new MOTO { X= 10, Y= 10 };
             Jugador.Add(moto); // crear la moto
+            BOT1.Add(enemigo1);
+
 
             for (int i = 0; i < 50; i++)
             {
                 MOTO estela = new MOTO();
                 Jugador.Add(estela);
+                BOT1.Add(estela);
             }
 
             Powerup = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            Powerup_tiempo = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
 
             Timer_del_juego.Start();
         }
@@ -255,14 +320,9 @@ namespace WindowsFormsApp1
 
         private void GAMEOVER()
         {
-            Timer_del_juego.Stop();
-
             Boton_Start.Enabled = true;
 
-            for (int i = 0; i < Jugador.Count; i++)
-            {
-                Jugador[i].destruirse();
-            }
+
         }
     }
 }
