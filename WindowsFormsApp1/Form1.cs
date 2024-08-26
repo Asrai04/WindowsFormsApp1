@@ -90,7 +90,6 @@ namespace WindowsFormsApp1
         private void Timer_Juego(object sender, EventArgs e)
         {
             int d = rand.Next(1, 100);
-            int ultimo = 0;
             if (d == 1)
             {
                 BOT1C.Direcciones = "izquierda";
@@ -128,7 +127,7 @@ namespace WindowsFormsApp1
 
             for (int i = Jugador.Count - 1; i >= 0; i--)
             {
-                if (i == 0 && moto_viva == false)
+                if (i == 0)
                 {
                     switch (Configuracion.Direcciones)
                     {
@@ -188,27 +187,14 @@ namespace WindowsFormsApp1
 
                         if (Jugador[i].X == Jugador[j].X && Jugador[i].Y == Jugador[j].Y)
                         {
-                            GAMEOVER();
-                            moto_viva = true;
+                            GAMEOVER();;
                         }
                     }
                 }
-                else if (moto_viva == false)
+                else
                 {
                     Jugador[i].X = Jugador[i - 1].X;
                     Jugador[i].Y = Jugador[i - 1].Y;
-                }
-                else
-                {
-                    if (ultimo <= Jugador.Count - 1)
-                    {
-                        Jugador[ultimo].destruirse();
-                        ultimo++;
-                    }
-                    else
-                    {
-                        Timer_del_juego.Stop();
-                    }
                 }
             }
 
@@ -219,7 +205,7 @@ namespace WindowsFormsApp1
         {
             Graphics canvas = e.Graphics;
 
-            Brush ColorMoto, ColorMoto1;
+            Brush ColorMoto;
 
             for (int i = 0; i < Jugador.Count; i++) 
             {
@@ -270,6 +256,7 @@ namespace WindowsFormsApp1
         {
             MaxWidth = Fondo_Juego.Width / Configuracion.Ancho - 1;
             MaxHeight = Fondo_Juego.Height / Configuracion.Largo - 1;
+            Timer_del_juego.Interval = 40;
 
             Jugador.Clear();
             Boton_Start.Enabled = false;
@@ -277,7 +264,7 @@ namespace WindowsFormsApp1
             score = 0;
             txtScore.Text = "Score: " + score;
 
-            MOTO moto = new MOTO { X = 2, Y = 2 };
+            MOTO moto = new MOTO { X = 10, Y = 10 };
             MOTO enemigo1 = new MOTO { X= 10, Y= 10 };
             Jugador.Add(moto); // crear la moto
             BOT1.Add(enemigo1);
@@ -322,6 +309,11 @@ namespace WindowsFormsApp1
         {
             Boton_Start.Enabled = true;
 
+            Timer_del_juego.Stop();
+
+            for (int i = 0; i < Jugador.Count; i++) {
+            
+            }
 
         }
     }
