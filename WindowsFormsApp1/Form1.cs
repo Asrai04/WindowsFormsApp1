@@ -198,6 +198,59 @@ namespace WindowsFormsApp1
                 }
             }
 
+            for (int i = BOT1.Count - 1; i >= 0; i--)
+            {
+                if (i == 0)
+                {
+                    switch (BOT1C.Direcciones)
+                    {
+                        case "izquierda":
+                            BOT1[i].X--;
+                            break;
+                        case "derecha":
+                            BOT1[i].X++;
+                            break;
+                        case "abajo":
+                            BOT1[i].Y++;
+                            break;
+                        case "arriba":
+                            BOT1[i].Y--;
+                            break;
+
+                    }
+
+                    if (BOT1[i].X < 0)
+                    {
+                        BOT1[i].X = MaxWidth;
+                    }
+                    if (BOT1[i].X > MaxWidth)
+                    {
+                        BOT1[i].X = 0;
+                    }
+                    if (BOT1[i].Y < 0)
+                    {
+                        BOT1[i].Y = MaxHeight;
+                    }
+                    if (BOT1[i].Y > MaxHeight)
+                    {
+                        BOT1[i].Y = 0;
+                    }
+                    for (int j = 1; j < Jugador.Count; j++)
+                    {
+
+                        if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y)
+                        {
+                            BOT1MUERE(); ;
+                        }
+                    }
+                }
+                else
+                {
+                    BOT1[i].X = BOT1[i - 1].X;
+                    BOT1[i].Y = BOT1[i - 1].Y;
+                }
+            }
+
             Fondo_Juego.Invalidate();   
         }
 
@@ -205,7 +258,7 @@ namespace WindowsFormsApp1
         {
             Graphics canvas = e.Graphics;
 
-            Brush ColorMoto;
+            Brush ColorMoto, ColorMoto2;
 
             for (int i = 0; i < Jugador.Count; i++) 
             {
@@ -226,6 +279,30 @@ namespace WindowsFormsApp1
                     (
                     Jugador[i].X * Configuracion.Ancho,
                     Jugador[i].Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
+            }
+
+            for (int i = 0; i < BOT1.Count; i++)
+            {
+                if (i == 0)
+                {
+                    ColorMoto2 = Brushes.DarkRed;
+                }
+                else if (i == 1)
+                {
+                    ColorMoto2 = Brushes.DarkRed;
+                }
+                else
+                {
+                    ColorMoto2 = Brushes.Red;
+                }
+
+                canvas.FillEllipse(ColorMoto2, new Rectangle
+                    (
+                    BOT1[i].X * Configuracion.Ancho,
+                    BOT1[i].Y * Configuracion.Largo,
                     Configuracion.Ancho,
                     Configuracion.Largo
                     ));
@@ -264,8 +341,8 @@ namespace WindowsFormsApp1
             score = 0;
             txtScore.Text = "Score: " + score;
 
-            MOTO moto = new MOTO { X = 10, Y = 10 };
-            MOTO enemigo1 = new MOTO { X= 10, Y= 10 };
+            MOTO moto = new MOTO { X = 5, Y = 10 };
+            MOTO enemigo1 = new MOTO { X= 70, Y= 10 };
             Jugador.Add(moto); // crear la moto
             BOT1.Add(enemigo1);
 
@@ -310,9 +387,15 @@ namespace WindowsFormsApp1
             Boton_Start.Enabled = true;
 
             Timer_del_juego.Stop();
+            Jugador.Clear();
+            BOT1.Clear();
 
-            for (int i = 0; i < Jugador.Count; i++) {
-            
+        }
+
+        private void BOT1MUERE()
+        {
+            for (int i = 0; i < BOT1.Count; i++) {
+                BOT1.Remove(BOT1[0]);
             }
 
         }

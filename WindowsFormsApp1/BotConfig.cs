@@ -15,8 +15,8 @@ namespace WindowsFormsApp1
 
         public BotConfig()
         {
-            Ancho = 10;
-            Largo = 10;
+            Ancho = 5;
+            Largo = 5;
             Direcciones = "izquierda";
         }
 
