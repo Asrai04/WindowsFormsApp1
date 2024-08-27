@@ -257,7 +257,7 @@ namespace WindowsFormsApp1
 
                         if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y)
                         {
-                            //Revisar colision entre los bots y el jugador ;
+                            Timer_del_juego.Interval = 500;
                         }
                     }
                 }
@@ -465,7 +465,6 @@ namespace WindowsFormsApp1
             for (int i = 0; i < BOT1.Count; i++) {
                 BOT1.Remove(BOT1[0]);
             }
-
         }
     }
 }
