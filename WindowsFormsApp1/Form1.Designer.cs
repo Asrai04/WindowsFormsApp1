@@ -33,6 +33,7 @@
             this.Fondo_Juego = new System.Windows.Forms.PictureBox();
             this.Timer_del_juego = new System.Windows.Forms.Timer(this.components);
             this.txtScore = new System.Windows.Forms.Label();
+            this.PORCOM = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Fondo_Juego)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,11 +74,23 @@
             this.txtScore.TabIndex = 2;
             this.txtScore.Text = "Score: 0";
             // 
+            // PORCOM
+            // 
+            this.PORCOM.AutoSize = true;
+            this.PORCOM.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PORCOM.Location = new System.Drawing.Point(1038, 121);
+            this.PORCOM.Name = "PORCOM";
+            this.PORCOM.Size = new System.Drawing.Size(114, 20);
+            this.PORCOM.TabIndex = 3;
+            this.PORCOM.Text = "FUEL: 100%";
+            this.PORCOM.Click += new System.EventHandler(this.label1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 703);
+            this.Controls.Add(this.PORCOM);
             this.Controls.Add(this.txtScore);
             this.Controls.Add(this.Fondo_Juego);
             this.Controls.Add(this.Boton_Start);
@@ -97,6 +110,7 @@
         private System.Windows.Forms.PictureBox Fondo_Juego;
         private System.Windows.Forms.Timer Timer_del_juego;
         private System.Windows.Forms.Label txtScore;
+        private System.Windows.Forms.Label PORCOM;
     }
 }
 

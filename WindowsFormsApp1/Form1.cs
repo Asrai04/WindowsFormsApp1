@@ -26,6 +26,7 @@ namespace WindowsFormsApp1
         int MaxHeight;
 
         int score;
+        int Combustible;
 
         Random rand = new Random();
 
@@ -38,9 +39,11 @@ namespace WindowsFormsApp1
             new Configuracion();
             Configuracion.Direcciones = "derecha";
             BOT1C.Direcciones = "izquierda";
+            Combustible = 100;
         }
 
         BotConfig BOT1C = new BotConfig();
+
 
         private void KeyDOWN(object sender, KeyEventArgs e)
         {
@@ -235,12 +238,12 @@ namespace WindowsFormsApp1
                     {
                         BOT1[i].Y = 0;
                     }
-                    for (int j = 1; j < Jugador.Count; j++)
+                    for (int j = 0; j < Jugador.Count; j++)
                     {
 
                         if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y)
                         {
-                            BOT1MUERE(); ;
+                            //Revisar colision entre los bots y el jugador ;
                         }
                     }
                 }
@@ -251,7 +254,18 @@ namespace WindowsFormsApp1
                 }
             }
 
-            Fondo_Juego.Invalidate();   
+            Fondo_Juego.Invalidate();
+            PORCOM.Text = "FUEL: " + Combustible + "%";
+            Combustible--;
+            if (Combustible <= -1)
+            {
+                GAMEOVER();
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void Update_Fondo(object sender, PaintEventArgs e)
@@ -347,7 +361,7 @@ namespace WindowsFormsApp1
             BOT1.Add(enemigo1);
 
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 4; i++)
             {
                 MOTO estela = new MOTO();
                 Jugador.Add(estela);
@@ -366,7 +380,7 @@ namespace WindowsFormsApp1
             score = score + 50;
             txtScore.Text = "Score: " + score;
 
-            for (int i = 0; i < 50; i++) 
+            for (int i = 0; i < 3; i++) 
             {
                 MOTO estela2 = new MOTO
                 {
