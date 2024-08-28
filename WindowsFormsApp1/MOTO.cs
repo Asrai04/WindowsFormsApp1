@@ -14,8 +14,8 @@ namespace WindowsFormsApp1
 
         public MOTO() 
         { 
-            X = 0;
-            Y = 0;
+            X = -10;
+            Y = -10;
         }
 
         public void destruirse()

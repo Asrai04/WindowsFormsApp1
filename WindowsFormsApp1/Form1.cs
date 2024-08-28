@@ -21,6 +21,8 @@ namespace WindowsFormsApp1
         private MOTO Powerup = new MOTO();
         private MOTO Powerup2 = new MOTO();
         private MOTO Powerup_tiempo = new MOTO();
+        private MOTO motito = new MOTO();
+        new MOTO h = new MOTO();
 
 
         int MaxWidth;
@@ -42,7 +44,7 @@ namespace WindowsFormsApp1
             Configuracion.Direcciones = "derecha";
             BOT1C.Direcciones = "izquierda";
             Combustible = 100;
-        }
+    }
 
         BotConfig BOT1C = new BotConfig();
 
@@ -89,7 +91,9 @@ namespace WindowsFormsApp1
 
         private void Start_Game(object sender, EventArgs e)
         {
+
             Restart();
+
         }
 
         private void Timer_Juego(object sender, EventArgs e)
@@ -168,7 +172,7 @@ namespace WindowsFormsApp1
                         Jugador[i].Y = 0;
                     }
 
-                    if (Jugador[i].X == Powerup.X && Jugador[i].Y == Powerup.Y)
+                    if (Jugador[i].X == h.X && Jugador[i].Y == h.Y)
                     {
                         CrecerStela();
                     }
@@ -257,7 +261,7 @@ namespace WindowsFormsApp1
 
                         if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y)
                         {
-                            Timer_del_juego.Interval = 500;
+                            Timer_del_juego.Interval = 10;
                         }
                     }
                 }
@@ -343,11 +347,12 @@ namespace WindowsFormsApp1
 
             canvas.FillEllipse(Brushes.Purple, new Rectangle
                     (
-                    Powerup.X * Configuracion.Ancho,
-                    Powerup.Y * Configuracion.Largo,
+                    h.X * Configuracion.Ancho,
+                    h.Y * Configuracion.Largo,
                     Configuracion.Ancho,
                     Configuracion.Largo
                     ));
+
 
             canvas.FillEllipse(Brushes.Purple, new Rectangle
                     (
@@ -362,6 +367,14 @@ namespace WindowsFormsApp1
                     (
                     Powerup_tiempo.X * Configuracion.Ancho,
                     Powerup_tiempo.Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
+
+            canvas.FillEllipse(Brushes.Purple, new Rectangle
+                    (
+                    h.X * Configuracion.Ancho,
+                    h.Y * Configuracion.Largo,
                     Configuracion.Ancho,
                     Configuracion.Largo
                     ));
@@ -386,6 +399,7 @@ namespace WindowsFormsApp1
             MOTO enemigo1 = new MOTO { X= 70, Y= 10 };
             Jugador.Add(moto); // crear la moto
             BOT1.Add(enemigo1);
+            NODO PREBA = new NODO(Powerup);
 
 
             for (int i = 0; i < 50; i++)
@@ -395,9 +409,11 @@ namespace WindowsFormsApp1
                 BOT1.Add(estela);
             }
 
-            Powerup = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            
             Powerup2 = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
             Powerup_tiempo = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            h = PREBA.optenerData();
+            h = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
 
             Timer_del_juego.Start();
             Combustible = 100;
@@ -422,7 +438,7 @@ namespace WindowsFormsApp1
                 Jugador.Add(estela2);
             }
 
-            Powerup = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            h = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
 
 
         }
