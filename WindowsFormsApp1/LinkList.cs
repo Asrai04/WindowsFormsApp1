@@ -36,26 +36,18 @@ namespace WindowsFormsApp1
             this.SIZE++;
         }
 
-        public void borrarDato()
+        public NODO borrarDato()
         {
+            NODO current = this.HEAD;
             if (this.HEAD == null)
             {
-                ;
+                return null;
             }
             else
             {
                 this.HEAD = this.HEAD.getNext();
+                return current;
             }
-        }
-        public NODO displayList()
-        {
-            NODO current = this.HEAD;
-            while (current != null)
-            {
-                return this.HEAD;
-                current = current.getNext();
-            }
-            return current;
         }
 
     }

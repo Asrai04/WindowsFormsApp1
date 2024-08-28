@@ -18,11 +18,14 @@ namespace WindowsFormsApp1
 
         private List<MOTO> Jugador = new List<MOTO>();
         private List<MOTO> BOT1 = new List<MOTO>();
-        private MOTO Powerup = new MOTO();
-        private MOTO Powerup2 = new MOTO();
-        private MOTO Powerup_tiempo = new MOTO();
-        private MOTO motito = new MOTO();
-        new MOTO h = new MOTO();
+        private LinkList BOT2 = new LinkList();
+        private MOTO Powerup = new MOTO(-10, -10);
+        private MOTO Powerup2 = new MOTO(-10, -10);
+        private MOTO Powerup_tiempo = new MOTO(-10, -10);
+        private MOTO GASOLINA = new MOTO(-10, -10);
+        private MOTO motito = new MOTO(-10, -10);
+        private MOTO h = new MOTO(-10, -10);
+        private List<MOTO> BOT2L = new List<MOTO>();
 
 
         int MaxWidth;
@@ -43,10 +46,12 @@ namespace WindowsFormsApp1
             new Configuracion();
             Configuracion.Direcciones = "derecha";
             BOT1C.Direcciones = "izquierda";
+            BOT2C.Direcciones = "izquierda";
             Combustible = 100;
     }
 
         BotConfig BOT1C = new BotConfig();
+        BotConfig BOT2C = new BotConfig();
 
 
         private void KeyDOWN(object sender, KeyEventArgs e)
@@ -99,6 +104,7 @@ namespace WindowsFormsApp1
         private void Timer_Juego(object sender, EventArgs e)
         {
             int d = rand.Next(1, 50);
+            int d2 = rand.Next(1, 50);
             if (d == 1 && BOT1C.Direcciones != "derecha")
             {
                 BOT1C.Direcciones = "izquierda";
@@ -115,8 +121,25 @@ namespace WindowsFormsApp1
             {
                 BOT1C.Direcciones = "arriba";
             }
-            
-            
+
+            if (d2 == 1 && BOT2C.Direcciones != "derecha")
+            {
+                BOT2C.Direcciones = "izquierda";
+            }
+            else if (d2 == 2 && BOT2C.Direcciones != "izquierda")
+            {
+                BOT2C.Direcciones = "derecha";
+            }
+            else if (d2 == 3 && BOT2C.Direcciones != "arriba")
+            {
+                BOT2C.Direcciones = "abajo";
+            }
+            else if (d2 == 4 && BOT2C.Direcciones != "abajp")
+            {
+                BOT2C.Direcciones = "arriba";
+            }
+
+
             if (Izquierda)
             {
                 Configuracion.Direcciones = "izquierda";
@@ -180,11 +203,16 @@ namespace WindowsFormsApp1
                     {
                         CrecerStela2();
                     }
+                    if (Jugador[i].X == GASOLINA.X && Jugador[i].Y == GASOLINA.Y)
+                    {
+                        Combustible = Combustible + 50;
+                        GASOLINA = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+                    }
                     if (Jugador[i].X == Powerup_tiempo.X && Jugador[i].Y == Powerup_tiempo.Y)
                     {
                         if (tempo_lento == false)
                         {
-                            Timer_del_juego.Interval = 80;
+                            Timer_del_juego.Interval = 20;
                             tempo_lento = true;
                         }
                         else
@@ -192,7 +220,7 @@ namespace WindowsFormsApp1
                             Timer_del_juego.Interval = 40;
                             tempo_lento = false;
                         }
-                        Powerup_tiempo = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+                        Powerup_tiempo = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
                     }
 
                     for (int j = 1; j < Jugador.Count; j++)
@@ -207,6 +235,14 @@ namespace WindowsFormsApp1
                     {
 
                         if (Jugador[i].X == BOT1[j].X && Jugador[i].Y == BOT1[j].Y)
+                        {
+                            GAMEOVER(); ;
+                        }
+                    }
+                    for (int j = 1; j < BOT2L.Count; j++)
+                    {
+
+                        if (Jugador[i].X == BOT2L[j].X && Jugador[i].Y == BOT2L[j].Y)
                         {
                             GAMEOVER(); ;
                         }
@@ -261,7 +297,7 @@ namespace WindowsFormsApp1
 
                         if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y)
                         {
-                            Timer_del_juego.Interval = 10;
+                            txtScore.Text = "CHOCO1";
                         }
                     }
                 }
@@ -271,6 +307,60 @@ namespace WindowsFormsApp1
                     BOT1[i].Y = BOT1[i - 1].Y;
                 }
             }
+
+            for (int i = BOT2L.Count - 1; i >= 0; i--)
+            {
+                if (i == 0)
+                {
+                    switch (BOT2C.Direcciones)
+                    {
+                        case "izquierda":
+                            BOT2L[i].X--;
+                            break;
+                        case "derecha":
+                            BOT2L[i].X++;
+                            break;
+                        case "abajo":
+                            BOT2L[i].Y++;
+                            break;
+                        case "arriba":
+                            BOT2L[i].Y--;
+                            break;
+
+                    }
+
+                    if (BOT2L[i].X < 0)
+                    {
+                        BOT2L[i].X = MaxWidth;
+                    }
+                    if (BOT2L[i].X > MaxWidth)
+                    {
+                        BOT2L[i].X = 0;
+                    }
+                    if (BOT2L[i].Y < 0)
+                    {
+                        BOT2L[i].Y = MaxHeight;
+                    }
+                    if (BOT2L[i].Y > MaxHeight)
+                    {
+                        BOT2L[i].Y = 0;
+                    }
+                    for (int j = 0; j < Jugador.Count; j++)
+                    {
+
+                        if (BOT2L[i].X == Jugador[j].X && BOT2L[i].Y == Jugador[j].Y)
+                        {
+                            txtScore.Text = "CHOCO2";
+                        }
+                    }
+                }
+                else
+                {
+                    BOT2L[i].X = BOT2L[i - 1].X;
+                    BOT2L[i].Y = BOT2L[i - 1].Y;
+                }
+            }
+
 
             Fondo_Juego.Invalidate();
             PORCOM.Text = "FUEL: " + Combustible + "%";
@@ -295,27 +385,51 @@ namespace WindowsFormsApp1
         {
             Graphics canvas = e.Graphics;
 
-            Brush ColorMoto, ColorMoto2;
+            Brush ColorMoto, ColorMoto2, ColorMoto3;
 
             for (int i = 0; i < BOT1.Count; i++)
             {
                 if (i == 0)
                 {
-                    ColorMoto2 = Brushes.DarkRed;
+                    ColorMoto2 = Brushes.Orange;
                 }
                 else if (i == 1)
                 {
-                    ColorMoto2 = Brushes.DarkRed;
+                    ColorMoto2 = Brushes.Orange;
                 }
                 else
                 {
-                    ColorMoto2 = Brushes.Red;
+                    ColorMoto2 = Brushes.Yellow;
                 }
 
                 canvas.FillEllipse(ColorMoto2, new Rectangle
                     (
                     BOT1[i].X * Configuracion.Ancho,
                     BOT1[i].Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
+            }
+
+            for (int i = 0; i < BOT2L.Count; i++)
+            {
+                if (i == 0)
+                {
+                    ColorMoto3 = Brushes.Gray;
+                }
+                else if (i == 1)
+                {
+                    ColorMoto3 = Brushes.Gray;
+                }
+                else
+                {
+                    ColorMoto3 = Brushes.LightGray;
+                }
+
+                canvas.FillEllipse(ColorMoto3, new Rectangle
+                    (
+                    BOT2L[i].X * Configuracion.Ancho,
+                    BOT2L[i].Y * Configuracion.Largo,
                     Configuracion.Ancho,
                     Configuracion.Largo
                     ));
@@ -344,6 +458,7 @@ namespace WindowsFormsApp1
                     Configuracion.Largo
                     ));
             }
+
 
             canvas.FillEllipse(Brushes.Purple, new Rectangle
                     (
@@ -379,6 +494,16 @@ namespace WindowsFormsApp1
                     Configuracion.Largo
                     ));
 
+            canvas.FillEllipse(Brushes.Red, new Rectangle
+                    (
+                    GASOLINA.X * Configuracion.Ancho,
+                    GASOLINA.Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
+
+
+
         }
 
         
@@ -395,25 +520,39 @@ namespace WindowsFormsApp1
             score = 0;
             txtScore.Text = "Score: " + score;
 
-            MOTO moto = new MOTO { X = 5, Y = 10 };
-            MOTO enemigo1 = new MOTO { X= 70, Y= 10 };
+            MOTO moto = new MOTO (5, 10);
+            MOTO enemigo1 = new MOTO(70, 10);
+            MOTO enemigo2 = new MOTO(70, 50);
             Jugador.Add(moto); // crear la moto
             BOT1.Add(enemigo1);
             NODO PREBA = new NODO(Powerup);
+            BOT2.insertarDato(enemigo2);
 
 
-            for (int i = 0; i < 50; i++)
+
+            for (int i = 0; i < 20; i++)
             {
-                MOTO estela = new MOTO();
+                MOTO estela = new MOTO(-10, -10);
+                MOTO estela2 = new MOTO(-10, -10);
+                MOTO estela3 = new MOTO(-10, -10);
                 Jugador.Add(estela);
-                BOT1.Add(estela);
+                BOT1.Add(estela2);
+                BOT2.insertarDato(estela3);
             }
 
-            
-            Powerup2 = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
-            Powerup_tiempo = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            for (int i = 0;  i < 20; i++)
+            {
+                NODO P = BOT2.borrarDato();
+                MOTO P2 = P.optenerData();
+                BOT2L.Add(P2);
+            }
+
+
+            Powerup2 = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+            Powerup_tiempo = new MOTO ( rand.Next(2, MaxWidth), rand.Next(2, MaxHeight) );
+            GASOLINA = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
             h = PREBA.optenerData();
-            h = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            h = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
 
             Timer_del_juego.Start();
             Combustible = 100;
@@ -429,7 +568,7 @@ namespace WindowsFormsApp1
 
             for (int i = 0; i < 3; i++) 
             {
-                MOTO estela2 = new MOTO
+                MOTO estela2 = new MOTO(-10, -10)
                 {
                     X = Jugador[Jugador.Count - 1].X,
                     Y = Jugador[Jugador.Count - 1].Y
@@ -438,7 +577,7 @@ namespace WindowsFormsApp1
                 Jugador.Add(estela2);
             }
 
-            h = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            h = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
 
 
         }
@@ -450,7 +589,7 @@ namespace WindowsFormsApp1
 
             for (int i = 0; i < 3; i++)
             {
-                MOTO estela2 = new MOTO
+                MOTO estela2 = new MOTO(-10, -10)
                 {
                     X = Jugador[Jugador.Count - 1].X,
                     Y = Jugador[Jugador.Count - 1].Y
@@ -459,7 +598,7 @@ namespace WindowsFormsApp1
                 Jugador.Add(estela2);
             }
 
-            Powerup2 = new MOTO { X = rand.Next(2, MaxWidth), Y = rand.Next(2, MaxHeight) };
+            Powerup2 = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
         }
 
         private void GASOLINA_RECHARCH()
@@ -473,6 +612,7 @@ namespace WindowsFormsApp1
             Timer_del_juego.Stop();
             Jugador.Clear();
             BOT1.Clear();
+            BOT2L.Clear();
 
         }
 

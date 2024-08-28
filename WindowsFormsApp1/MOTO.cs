@@ -12,10 +12,10 @@ namespace WindowsFormsApp1
         public int X {  get; set; }
         public int Y { get; set; }
 
-        public MOTO() 
+        public MOTO(int X2, int Y2) 
         { 
-            X = -10;
-            Y = -10;
+            X = X2;
+            Y = Y2;
         }
 
         public void destruirse()
