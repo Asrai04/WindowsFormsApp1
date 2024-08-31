@@ -19,13 +19,19 @@ namespace WindowsFormsApp1
         private List<MOTO> Jugador = new List<MOTO>();
         private List<MOTO> BOT1 = new List<MOTO>();
         private LinkList BOT2 = new LinkList();
+        private LinkList BOT3 = new LinkList();
+        private LinkList BOT4 = new LinkList();
+
         private MOTO Powerup = new MOTO(-10, -10);
         private MOTO Powerup2 = new MOTO(-10, -10);
         private MOTO Powerup_tiempo = new MOTO(-10, -10);
         private MOTO GASOLINA = new MOTO(-10, -10);
+
         private MOTO motito = new MOTO(-10, -10);
         private MOTO h = new MOTO(-10, -10);
         private List<MOTO> BOT2L = new List<MOTO>();
+        private List<MOTO> BOT3L = new List<MOTO>();
+        private List<MOTO> BOT4L = new List<MOTO>();
 
 
         int MaxWidth;
@@ -38,7 +44,7 @@ namespace WindowsFormsApp1
 
         Random rand = new Random();
 
-        bool Izquierda, Derecha, Arriba, Abajo, tempo_lento, BOT1_vivo, BOT2_vivo;
+        bool Izquierda, Derecha, Arriba, Abajo, tempo_lento, BOT1_vivo, BOT2_vivo, BOT3_vivo, BOT4_vivo, Tbomba, Ttiempo;
 
         public Form1()
         {
@@ -53,6 +59,8 @@ namespace WindowsFormsApp1
 
         BotConfig BOT1C = new BotConfig();
         BotConfig BOT2C = new BotConfig();
+        BotConfig BOT3C = new BotConfig();
+        BotConfig BOT4C = new BotConfig();
 
 
         private void KeyDOWN(object sender, KeyEventArgs e)
@@ -73,6 +81,7 @@ namespace WindowsFormsApp1
             {
                 Abajo = true;
             }
+            ////////////////////////////////////////////////////////////////////////
             if (e.KeyCode == Keys.A && Configuracion.Direcciones != "derecha")
             {
                 Izquierda = true;
@@ -109,6 +118,7 @@ namespace WindowsFormsApp1
             {
                 Abajo = false;
             }
+            ///////////////////////////////////////////////////////////////////////
             if (e.KeyCode == Keys.A)
             {
                 Izquierda = false;
@@ -125,6 +135,11 @@ namespace WindowsFormsApp1
             {
                 Abajo = false;
             }
+            ///////////////////////////////////////////////////////////////////////
+            if (e.KeyCode == Keys.Space)
+            {
+
+            }
         }
 
         private void Start_Game(object sender, EventArgs e)
@@ -138,6 +153,8 @@ namespace WindowsFormsApp1
         {
             int d = rand.Next(1, 50);
             int d2 = rand.Next(1, 50);
+            int d3 = rand.Next(1, 50);
+            int d4 = rand.Next(1, 50);
             if (d == 1 && BOT1C.Direcciones != "derecha")
             {
                 BOT1C.Direcciones = "izquierda";
@@ -154,7 +171,7 @@ namespace WindowsFormsApp1
             {
                 BOT1C.Direcciones = "arriba";
             }
-
+            //////////////////////////////////////////////////////
             if (d2 == 1 && BOT2C.Direcciones != "derecha")
             {
                 BOT2C.Direcciones = "izquierda";
@@ -171,7 +188,40 @@ namespace WindowsFormsApp1
             {
                 BOT2C.Direcciones = "arriba";
             }
-
+            /////////////////////////////////////////////////////
+            if (d3 == 1 && BOT3C.Direcciones != "derecha")
+            {
+                BOT3C.Direcciones = "izquierda";
+            }
+            else if (d3 == 2 && BOT3C.Direcciones != "izquierda")
+            {
+                BOT3C.Direcciones = "derecha";
+            }
+            else if (d3 == 3 && BOT3C.Direcciones != "arriba")
+            {
+                BOT3C.Direcciones = "abajo";
+            }
+            else if (d3 == 4 && BOT3C.Direcciones != "abajp")
+            {
+                BOT3C.Direcciones = "arriba";
+            }
+            /////////////////////////////////////////////////////
+            if (d4 == 1 && BOT4C.Direcciones != "derecha")
+            {
+                BOT4C.Direcciones = "izquierda";
+            }
+            else if (d4 == 2 && BOT4C.Direcciones != "izquierda")
+            {
+                BOT4C.Direcciones = "derecha";
+            }
+            else if (d4 == 3 && BOT4C.Direcciones != "arriba")
+            {
+                BOT4C.Direcciones = "abajo";
+            }
+            else if (d4 == 4 && BOT4C.Direcciones != "abajp")
+            {
+                BOT4C.Direcciones = "arriba";
+            }
 
             if (Izquierda)
             {
@@ -243,6 +293,7 @@ namespace WindowsFormsApp1
                     }
                     if (Jugador[i].X == Powerup_tiempo.X && Jugador[i].Y == Powerup_tiempo.Y)
                     {
+                        Ttiempo = true;
                         if (tempo_lento == false)
                         {
                             Timer_del_juego.Interval = 20;
@@ -269,8 +320,6 @@ namespace WindowsFormsApp1
 
                         if (Jugador[i].X == BOT1[j].X && Jugador[i].Y == BOT1[j].Y && BOT1_vivo == true)
                         {
-                            score = score + 150;
-                            txtScore.Text = "Score: " + score;
                             GAMEOVER(); ;
                         }
                     }
@@ -279,8 +328,22 @@ namespace WindowsFormsApp1
 
                         if (Jugador[i].X == BOT2L[j].X && Jugador[i].Y == BOT2L[j].Y && BOT2_vivo == true)
                         {
-                            score = score + 150;
-                            txtScore.Text = "Score: " + score;
+                            GAMEOVER(); ;
+                        }
+                    }
+                    for (int j = 1; j < BOT3L.Count; j++)
+                    {
+
+                        if (Jugador[i].X == BOT3L[j].X && Jugador[i].Y == BOT3L[j].Y && BOT3_vivo == true)
+                        {
+                            GAMEOVER(); ;
+                        }
+                    }
+                    for (int j = 1; j < BOT4L.Count; j++)
+                    {
+
+                        if (Jugador[i].X == BOT4L[j].X && Jugador[i].Y == BOT4L[j].Y && BOT4_vivo == true)
+                        {
                             GAMEOVER(); ;
                         }
                     }
@@ -338,6 +401,8 @@ namespace WindowsFormsApp1
                             {
                                 BOT1[ll].destruirse();
                                 BOT1_vivo = false;
+                                score = score + 150;
+                                txtScore.Text = "Score: " + score;
                             }
                         }
                         if (BOT1[i].X == h.X && BOT1[i].Y == h.Y)
@@ -403,6 +468,8 @@ namespace WindowsFormsApp1
                             {
                                 BOT2L[ll].destruirse();
                                 BOT2_vivo = false;
+                                score = score + 150;
+                                txtScore.Text = "Score: " + score;
                             }
                         }
                         if (BOT2L[i].X == h.X && BOT2L[i].Y == h.Y)
@@ -422,6 +489,140 @@ namespace WindowsFormsApp1
                 }
             }
 
+            for (int i = BOT3L.Count - 1; i >= 0; i--)
+            {
+                if (i == 0)
+                {
+                    switch (BOT3C.Direcciones)
+                    {
+                        case "izquierda":
+                            BOT3L[i].X--;
+                            break;
+                        case "derecha":
+                            BOT3L[i].X++;
+                            break;
+                        case "abajo":
+                            BOT3L[i].Y++;
+                            break;
+                        case "arriba":
+                            BOT3L[i].Y--;
+                            break;
+
+                    }
+
+                    if (BOT3L[i].X < 0)
+                    {
+                        BOT3L[i].X = MaxWidth;
+                    }
+                    if (BOT3L[i].X > MaxWidth && BOT3L[i].X < 5000)
+                    {
+                        BOT3L[i].X = 0;
+                    }
+                    if (BOT3L[i].Y < 0)
+                    {
+                        BOT3L[i].Y = MaxHeight;
+                    }
+                    if (BOT3L[i].Y > MaxHeight)
+                    {
+                        BOT3L[i].Y = 0;
+                    }
+                    for (int j = 0; j < Jugador.Count; j++)
+                    {
+
+                        if (BOT3L[i].X == Jugador[j].X && BOT3L[i].Y == Jugador[j].Y)
+                        {
+                            for (int ll = BOT3L.Count - 1; ll > 0; ll--)
+                            {
+                                BOT3L[ll].destruirse();
+                                BOT3_vivo = false;
+                                score = score + 150;
+                                txtScore.Text = "Score: " + score;
+                            }
+                        }
+                        if (BOT3L[i].X == h.X && BOT3L[i].Y == h.Y)
+                        {
+                            CrecerStela(4);
+                        }
+                        if (BOT3L[i].X == Powerup2.X && BOT3L[i].Y == Powerup2.Y)
+                        {
+                            CrecerStela2(4);
+                        }
+                    }
+                }
+                else
+                {
+                    BOT3L[i].X = BOT3L[i - 1].X;
+                    BOT3L[i].Y = BOT3L[i - 1].Y;
+                }
+            }
+
+            for (int i = BOT4L.Count - 1; i >= 0; i--)
+            {
+                if (i == 0)
+                {
+                    switch (BOT4C.Direcciones)
+                    {
+                        case "izquierda":
+                            BOT4L[i].X--;
+                            break;
+                        case "derecha":
+                            BOT4L[i].X++;
+                            break;
+                        case "abajo":
+                            BOT4L[i].Y++;
+                            break;
+                        case "arriba":
+                            BOT4L[i].Y--;
+                            break;
+
+                    }
+
+                    if (BOT4L[i].X < 0)
+                    {
+                        BOT4L[i].X = MaxWidth;
+                    }
+                    if (BOT4L[i].X > MaxWidth && BOT4L[i].X < 5000)
+                    {
+                        BOT4L[i].X = 0;
+                    }
+                    if (BOT4L[i].Y < 0)
+                    {
+                        BOT4L[i].Y = MaxHeight;
+                    }
+                    if (BOT4L[i].Y > MaxHeight)
+                    {
+                        BOT4L[i].Y = 0;
+                    }
+                    for (int j = 0; j < Jugador.Count; j++)
+                    {
+
+                        if (BOT4L[i].X == Jugador[j].X && BOT4L[i].Y == Jugador[j].Y)
+                        {
+                            for (int ll = BOT4L.Count - 1; ll > 0; ll--)
+                            {
+                                BOT4L[ll].destruirse();
+                                BOT4_vivo = false;
+                                score = score + 150;
+                                txtScore.Text = "Score: " + score;
+                            }
+                        }
+                        if (BOT4L[i].X == h.X && BOT4L[i].Y == h.Y)
+                        {
+                            CrecerStela(5);
+                        }
+                        if (BOT4L[i].X == Powerup2.X && BOT4L[i].Y == Powerup2.Y)
+                        {
+                            CrecerStela2(5);
+                        }
+                    }
+                }
+                else
+                {
+                    BOT4L[i].X = BOT4L[i - 1].X;
+                    BOT4L[i].Y = BOT4L[i - 1].Y;
+                }
+            }
+
 
             Fondo_Juego.Invalidate();
             PORCOM.Text = "FUEL: " + Combustible + "%";
@@ -435,6 +636,18 @@ namespace WindowsFormsApp1
                 GAMEOVER();
             }
             CC++;
+
+            if (Ttiempo == true)
+            {
+                CC2++;
+            }
+            if (CC2 == 40)
+            {
+                Timer_del_juego.Interval = 40;
+                tempo_lento = false;
+                Ttiempo = false;
+                CC2 = 0;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -446,7 +659,7 @@ namespace WindowsFormsApp1
         {
             Graphics canvas = e.Graphics;
 
-            Brush ColorMoto, ColorMoto2, ColorMoto3;
+            Brush ColorMoto, ColorMoto2, ColorMoto3, ColorMoto4, ColorMoto5;
 
 
             if (BOT1_vivo == true)
@@ -502,6 +715,59 @@ namespace WindowsFormsApp1
                         ));
                 }
             }
+            if (BOT3_vivo == true)
+            {
+                for (int i = 0; i < BOT3L.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        ColorMoto4 = Brushes.Green;
+                    }
+                    else if (i == 1)
+                    {
+                        ColorMoto4 = Brushes.Green;
+                    }
+                    else
+                    {
+                        ColorMoto4 = Brushes.LightGreen;
+                    }
+
+                    canvas.FillEllipse(ColorMoto4, new Rectangle
+                        (
+                        BOT3L[i].X * Configuracion.Ancho,
+                        BOT3L[i].Y * Configuracion.Largo,
+                        Configuracion.Ancho,
+                        Configuracion.Largo
+                        ));
+                }
+            }
+            if (BOT4_vivo == true)
+            {
+                for (int i = 0; i < BOT4L.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        ColorMoto5 = Brushes.Purple;
+                    }
+                    else if (i == 1)
+                    {
+                        ColorMoto5 = Brushes.Purple;
+                    }
+                    else
+                    {
+                        ColorMoto5 = Brushes.Pink;
+                    }
+
+                    canvas.FillEllipse(ColorMoto5, new Rectangle
+                        (
+                        BOT4L[i].X * Configuracion.Ancho,
+                        BOT4L[i].Y * Configuracion.Largo,
+                        Configuracion.Ancho,
+                        Configuracion.Largo
+                        ));
+                }
+            }
+
 
             for (int i = 0; i < Jugador.Count; i++) 
             {
@@ -590,32 +856,52 @@ namespace WindowsFormsApp1
 
             BOT1_vivo = true;
             BOT2_vivo = true;
+            BOT3_vivo = true;
+            BOT4_vivo = true;
+            Ttiempo = false;
+            tempo_lento = false;
 
             MOTO moto = new MOTO (5, 10);
             MOTO enemigo1 = new MOTO(70, 10);
-            MOTO enemigo2 = new MOTO(70, 50);
+            MOTO enemigo2 = new MOTO(5, 50);
+            MOTO enemigo3 = new MOTO(70, 50);
+            MOTO enemigo4 = new MOTO(30, 50);
             Jugador.Add(moto); // crear la moto
             BOT1.Add(enemigo1);
             NODO PREBA = new NODO(Powerup);
             BOT2.insertarDato(enemigo2);
+            BOT3.insertarDato(enemigo3);
+            BOT4.insertarDato(enemigo4);
 
-
-
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 4; i++)
             {
                 MOTO estela = new MOTO(-10, -10);
                 MOTO estela2 = new MOTO(-10, -10);
                 MOTO estela3 = new MOTO(-10, -10);
+                MOTO estela4 = new MOTO(-10, -10);
+                MOTO estela5 = new MOTO(-10, -10);
+
                 Jugador.Add(estela);
                 BOT1.Add(estela2);
                 BOT2.insertarDato(estela3);
+                BOT3.insertarDato(estela4);
+                BOT4.insertarDato(estela5);
             }
 
-            for (int i = 0;  i < 20; i++)
+            for (int i = 0;  i < 5; i++)
             {
                 NODO P = BOT2.borrarDato();
                 MOTO P2 = P.optenerData();
+
+                NODO PA = BOT3.borrarDato();
+                MOTO PA2 = PA.optenerData();
+
+                NODO PAt = BOT4.borrarDato();
+                MOTO PAt2 = PAt.optenerData();
+
                 BOT2L.Add(P2);
+                BOT3L.Add(PA2);
+                BOT4L.Add(PAt2);
             }
 
 
@@ -675,6 +961,19 @@ namespace WindowsFormsApp1
                     BOT2L.Add(estela2);
                 }
             }
+            else if (h2 == 4)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    MOTO estela2 = new MOTO(-10, -10)
+                    {
+                        X = BOT3L[BOT3L.Count - 1].X,
+                        Y = BOT3L[BOT3L.Count - 1].Y
+                    };
+
+                    BOT3L.Add(estela2);
+                }
+            }
 
             h = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
 
@@ -724,6 +1023,19 @@ namespace WindowsFormsApp1
                     BOT2L.Add(estela2);
                 }
             }
+            else if (h3 == 4)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    MOTO estela2 = new MOTO(-10, -10)
+                    {
+                        X = BOT3L[BOT3L.Count - 1].X,
+                        Y = BOT3L[BOT3L.Count - 1].Y
+                    };
+
+                    BOT3L.Add(estela2);
+                }
+            }
 
             Powerup2 = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
         }
@@ -737,6 +1049,8 @@ namespace WindowsFormsApp1
             Jugador.Clear();
             BOT1.Clear();
             BOT2L.Clear();
+            BOT3L.Clear();
+            BOT4L.Clear();
         }
     }
 }
