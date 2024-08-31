@@ -34,6 +34,8 @@
             this.Timer_del_juego = new System.Windows.Forms.Timer(this.components);
             this.txtScore = new System.Windows.Forms.Label();
             this.PORCOM = new System.Windows.Forms.Label();
+            this.txtBomba = new System.Windows.Forms.Label();
+            this.txtEscudo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Fondo_Juego)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,11 +87,34 @@
             this.PORCOM.Text = "FUEL: 100%";
             this.PORCOM.Click += new System.EventHandler(this.label1_Click);
             // 
+            // txtBomba
+            // 
+            this.txtBomba.AutoSize = true;
+            this.txtBomba.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBomba.Location = new System.Drawing.Point(1027, 611);
+            this.txtBomba.Name = "txtBomba";
+            this.txtBomba.Size = new System.Drawing.Size(150, 20);
+            this.txtBomba.TabIndex = 4;
+            this.txtBomba.Text = "Hipervelocidad:0";
+            this.txtBomba.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // txtEscudo
+            // 
+            this.txtEscudo.AutoSize = true;
+            this.txtEscudo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEscudo.Location = new System.Drawing.Point(1028, 647);
+            this.txtEscudo.Name = "txtEscudo";
+            this.txtEscudo.Size = new System.Drawing.Size(97, 20);
+            this.txtEscudo.TabIndex = 5;
+            this.txtEscudo.Text = "Escudos:0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 703);
+            this.ClientSize = new System.Drawing.Size(1196, 703);
+            this.Controls.Add(this.txtEscudo);
+            this.Controls.Add(this.txtBomba);
             this.Controls.Add(this.PORCOM);
             this.Controls.Add(this.txtScore);
             this.Controls.Add(this.Fondo_Juego);
@@ -111,6 +136,8 @@
         private System.Windows.Forms.Timer Timer_del_juego;
         private System.Windows.Forms.Label txtScore;
         private System.Windows.Forms.Label PORCOM;
+        private System.Windows.Forms.Label txtBomba;
+        private System.Windows.Forms.Label txtEscudo;
     }
 }
 

@@ -26,12 +26,15 @@ namespace WindowsFormsApp1
         private MOTO Powerup2 = new MOTO(-10, -10);
         private MOTO Powerup_tiempo = new MOTO(-10, -10);
         private MOTO GASOLINA = new MOTO(-10, -10);
+        private MOTO Escudo = new MOTO(-10, -10);
 
         private MOTO motito = new MOTO(-10, -10);
         private MOTO h = new MOTO(-10, -10);
         private List<MOTO> BOT2L = new List<MOTO>();
         private List<MOTO> BOT3L = new List<MOTO>();
         private List<MOTO> BOT4L = new List<MOTO>();
+
+        private List<int> ITEMS = new List<int>();
 
 
         int MaxWidth;
@@ -41,10 +44,13 @@ namespace WindowsFormsApp1
         int Combustible;
         int CC;
         int CC2;
+        int CC3;
+        int CH;
+        int CI;
 
         Random rand = new Random();
 
-        bool Izquierda, Derecha, Arriba, Abajo, tempo_lento, BOT1_vivo, BOT2_vivo, BOT3_vivo, BOT4_vivo, Tbomba, Ttiempo;
+        bool Izquierda, Derecha, Arriba, Abajo, tempo_lento, BOT1_vivo, BOT2_vivo, BOT3_vivo, BOT4_vivo, TEscudo, Ttiempo;
 
         public Form1()
         {
@@ -62,6 +68,10 @@ namespace WindowsFormsApp1
         BotConfig BOT3C = new BotConfig();
         BotConfig BOT4C = new BotConfig();
 
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
 
         private void KeyDOWN(object sender, KeyEventArgs e)
         {
@@ -138,10 +148,21 @@ namespace WindowsFormsApp1
             ///////////////////////////////////////////////////////////////////////
             if (e.KeyCode == Keys.Space)
             {
-
+                if (ITEMS.Count > 0)
+                {
+                    if (ITEMS[0] == 1)
+                    {
+                        HIPERVELOCIDAD();
+                        ITEMS.RemoveAt(0);
+                    }
+                    if (ITEMS[0] == 2)
+                    {
+                        INVENCIBLE();
+                        ITEMS.RemoveAt(0);
+                    } 
+                }
             }
         }
-
         private void Start_Game(object sender, EventArgs e)
         {
 
@@ -291,26 +312,25 @@ namespace WindowsFormsApp1
                         Combustible = 100;
                         GASOLINA = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
                     }
+                    if (Jugador[i].X == Escudo.X && Jugador[i].Y == Escudo.Y)
+                    {
+                        Escudo = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+                        txtEscudo.Text = "Escudo:" + 1;
+                        ITEMS.Add(2);
+                    }
                     if (Jugador[i].X == Powerup_tiempo.X && Jugador[i].Y == Powerup_tiempo.Y)
                     {
-                        Ttiempo = true;
-                        if (tempo_lento == false)
-                        {
-                            Timer_del_juego.Interval = 20;
-                            tempo_lento = true;
-                        }
-                        else
-                        {
-                            Timer_del_juego.Interval = 40;
-                            tempo_lento = false;
-                        }
-                        Powerup_tiempo = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+                        CH++;
+                        tempo_lento = true;
+                        Powerup_tiempo = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+                        txtBomba.Text = "Hipervelocidad:" + CH;
+                        ITEMS.Add(1);
                     }
 
                     for (int j = 1; j < Jugador.Count; j++)
                     {
 
-                        if (Jugador[i].X == Jugador[j].X && Jugador[i].Y == Jugador[j].Y)
+                        if (Jugador[i].X == Jugador[j].X && Jugador[i].Y == Jugador[j].Y && TEscudo == false)
                         {
                             GAMEOVER();;
                         }
@@ -318,7 +338,7 @@ namespace WindowsFormsApp1
                     for (int j = 1; j < BOT1.Count; j++)
                     {
 
-                        if (Jugador[i].X == BOT1[j].X && Jugador[i].Y == BOT1[j].Y && BOT1_vivo == true)
+                        if (Jugador[i].X == BOT1[j].X && Jugador[i].Y == BOT1[j].Y && BOT1_vivo == true && TEscudo == false)
                         {
                             GAMEOVER(); ;
                         }
@@ -326,7 +346,7 @@ namespace WindowsFormsApp1
                     for (int j = 1; j < BOT2L.Count; j++)
                     {
 
-                        if (Jugador[i].X == BOT2L[j].X && Jugador[i].Y == BOT2L[j].Y && BOT2_vivo == true)
+                        if (Jugador[i].X == BOT2L[j].X && Jugador[i].Y == BOT2L[j].Y && BOT2_vivo == true && TEscudo == false)
                         {
                             GAMEOVER(); ;
                         }
@@ -334,7 +354,7 @@ namespace WindowsFormsApp1
                     for (int j = 1; j < BOT3L.Count; j++)
                     {
 
-                        if (Jugador[i].X == BOT3L[j].X && Jugador[i].Y == BOT3L[j].Y && BOT3_vivo == true)
+                        if (Jugador[i].X == BOT3L[j].X && Jugador[i].Y == BOT3L[j].Y && BOT3_vivo == true && TEscudo == false)
                         {
                             GAMEOVER(); ;
                         }
@@ -342,7 +362,7 @@ namespace WindowsFormsApp1
                     for (int j = 1; j < BOT4L.Count; j++)
                     {
 
-                        if (Jugador[i].X == BOT4L[j].X && Jugador[i].Y == BOT4L[j].Y && BOT4_vivo == true)
+                        if (Jugador[i].X == BOT4L[j].X && Jugador[i].Y == BOT4L[j].Y && BOT4_vivo == true && TEscudo == false)
                         {
                             GAMEOVER(); ;
                         }
@@ -648,6 +668,15 @@ namespace WindowsFormsApp1
                 Ttiempo = false;
                 CC2 = 0;
             }
+            if (TEscudo == true)
+            {
+                CC3++;
+            }
+            if (CC3 == 20)
+            {
+                TEscudo = false;
+                CC3 = 0;
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -835,9 +864,13 @@ namespace WindowsFormsApp1
                     Configuracion.Ancho,
                     Configuracion.Largo
                     ));
-
-
-
+            canvas.FillEllipse(Brushes.Cyan, new Rectangle
+                    (
+                    Escudo.X * Configuracion.Ancho,
+                    Escudo.Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
         }
 
         
@@ -908,12 +941,15 @@ namespace WindowsFormsApp1
             Powerup2 = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
             Powerup_tiempo = new MOTO ( rand.Next(2, MaxWidth), rand.Next(2, MaxHeight) );
             GASOLINA = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+            Escudo = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
             h = PREBA.optenerData();
             h = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
 
             Timer_del_juego.Start();
             Combustible = 100;
             CC = 0;
+            CH = 0;
+            TEscudo = false;
             Configuracion.Direcciones = "derecha";
         }
         
@@ -1040,6 +1076,20 @@ namespace WindowsFormsApp1
             Powerup2 = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
         }
 
+        private void HIPERVELOCIDAD()
+        {
+            CH--;
+            Ttiempo = true;
+            Timer_del_juego.Interval = 20;
+            tempo_lento = false;
+            txtBomba.Text = "Hipervelocidad:" + CH;
+        }
+        private void INVENCIBLE()
+        {
+            CI--;
+            TEscudo = true;
+            txtEscudo.Text = "Escudo:" + CI;
+        }
         
         private void GAMEOVER()
         {
