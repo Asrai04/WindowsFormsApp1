@@ -20,7 +20,7 @@ namespace WindowsFormsApp1
 
         public void destruirse()
         {
-            X = 100000;
+            X = 10000;
         }
         public void revivir()
         {
