@@ -155,7 +155,7 @@ namespace WindowsFormsApp1
                         HIPERVELOCIDAD();
                         ITEMS.RemoveAt(0);
                     }
-                    if (ITEMS[0] == 2)
+                    else if (ITEMS[0] == 2)
                     {
                         INVENCIBLE();
                         ITEMS.RemoveAt(0);
@@ -314,8 +314,9 @@ namespace WindowsFormsApp1
                     }
                     if (Jugador[i].X == Escudo.X && Jugador[i].Y == Escudo.Y)
                     {
+                        CI++;
                         Escudo = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
-                        txtEscudo.Text = "Escudo:" + 1;
+                        txtEscudo.Text = "Escudo:" + CI;
                         ITEMS.Add(2);
                     }
                     if (Jugador[i].X == Powerup_tiempo.X && Jugador[i].Y == Powerup_tiempo.Y)
@@ -797,29 +798,83 @@ namespace WindowsFormsApp1
                 }
             }
 
-
-            for (int i = 0; i < Jugador.Count; i++) 
+            if (TEscudo == false && Ttiempo == false)
             {
-                if (i == 0)
+                for (int i = 0; i < Jugador.Count; i++)
                 {
-                    ColorMoto = Brushes.Blue;
-                }
-                else if (i == 1)
-                {
-                    ColorMoto = Brushes.Blue;
-                }
-                else
-                {
-                    ColorMoto = Brushes.Cyan;
-                }
+                    if (i == 0)
+                    {
+                        ColorMoto = Brushes.Blue;
+                    }
+                    else if (i == 1)
+                    {
+                        ColorMoto = Brushes.Blue;
+                    }
+                    else
+                    {
+                        ColorMoto = Brushes.Cyan;
+                    }
 
-                canvas.FillEllipse(ColorMoto, new Rectangle
-                    (
-                    Jugador[i].X * Configuracion.Ancho,
-                    Jugador[i].Y * Configuracion.Largo,
-                    Configuracion.Ancho,
-                    Configuracion.Largo
-                    ));
+                    canvas.FillEllipse(ColorMoto, new Rectangle
+                        (
+                        Jugador[i].X * Configuracion.Ancho,
+                        Jugador[i].Y * Configuracion.Largo,
+                        Configuracion.Ancho,
+                        Configuracion.Largo
+                        ));
+                }
+            }
+            else if (TEscudo == true)
+            {
+                for (int i = 0; i < Jugador.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        ColorMoto = Brushes.White;
+                    }
+                    else if (i == 1)
+                    {
+                        ColorMoto = Brushes.White;
+                    }
+                    else
+                    {
+                        ColorMoto = Brushes.White;
+                    }
+
+                    canvas.FillEllipse(ColorMoto, new Rectangle
+                        (
+                        Jugador[i].X * Configuracion.Ancho,
+                        Jugador[i].Y * Configuracion.Largo,
+                        Configuracion.Ancho,
+                        Configuracion.Largo
+                        ));
+                }
+            }
+            else if (Ttiempo == true)
+            {
+                for (int i = 0; i < Jugador.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        ColorMoto = Brushes.Red;
+                    }
+                    else if (i == 1)
+                    {
+                        ColorMoto = Brushes.Red;
+                    }
+                    else
+                    {
+                        ColorMoto = Brushes.Red;
+                    }
+
+                    canvas.FillEllipse(ColorMoto, new Rectangle
+                        (
+                        Jugador[i].X * Configuracion.Ancho,
+                        Jugador[i].Y * Configuracion.Largo,
+                        Configuracion.Ancho,
+                        Configuracion.Largo
+                        ));
+                }
             }
 
 
@@ -883,6 +938,9 @@ namespace WindowsFormsApp1
 
             Jugador.Clear();
             Boton_Start.Enabled = false;
+
+            txtBomba.Text = "Hipervelocidad:" + CH;
+            txtEscudo.Text = "Escudos:" + CI;
 
             score = 0;
             txtScore.Text = "Score: " + score;
@@ -949,6 +1007,7 @@ namespace WindowsFormsApp1
             Combustible = 100;
             CC = 0;
             CH = 0;
+            CI = 0;
             TEscudo = false;
             Configuracion.Direcciones = "derecha";
         }
@@ -1101,6 +1160,7 @@ namespace WindowsFormsApp1
             BOT2L.Clear();
             BOT3L.Clear();
             BOT4L.Clear();
+            ITEMS.Clear();
         }
     }
 }
