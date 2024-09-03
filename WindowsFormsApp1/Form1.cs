@@ -336,7 +336,7 @@ namespace WindowsFormsApp1
                             GAMEOVER();;
                         }
                     }
-                    for (int j = 1; j < BOT1.Count; j++)
+                    for (int j = 0; j < BOT1.Count; j++)
                     {
 
                         if (Jugador[i].X == BOT1[j].X && Jugador[i].Y == BOT1[j].Y && BOT1_vivo == true && TEscudo == false)
@@ -344,7 +344,7 @@ namespace WindowsFormsApp1
                             GAMEOVER(); ;
                         }
                     }
-                    for (int j = 1; j < BOT2L.Count; j++)
+                    for (int j = 0; j < BOT2L.Count; j++)
                     {
 
                         if (Jugador[i].X == BOT2L[j].X && Jugador[i].Y == BOT2L[j].Y && BOT2_vivo == true && TEscudo == false)
@@ -352,7 +352,7 @@ namespace WindowsFormsApp1
                             GAMEOVER(); ;
                         }
                     }
-                    for (int j = 1; j < BOT3L.Count; j++)
+                    for (int j = 0; j < BOT3L.Count; j++)
                     {
 
                         if (Jugador[i].X == BOT3L[j].X && Jugador[i].Y == BOT3L[j].Y && BOT3_vivo == true && TEscudo == false)
@@ -360,7 +360,7 @@ namespace WindowsFormsApp1
                             GAMEOVER(); ;
                         }
                     }
-                    for (int j = 1; j < BOT4L.Count; j++)
+                    for (int j = 0; j < BOT4L.Count; j++)
                     {
 
                         if (Jugador[i].X == BOT4L[j].X && Jugador[i].Y == BOT4L[j].Y && BOT4_vivo == true && TEscudo == false)
@@ -657,12 +657,12 @@ namespace WindowsFormsApp1
                 GAMEOVER();
             }
             CC++;
-
+            int rando = rand.Next(20, 80);
             if (Ttiempo == true)
             {
                 CC2++;
             }
-            if (CC2 == 40)
+            if (CC2 == rando)
             {
                 Timer_del_juego.Interval = 40;
                 tempo_lento = false;
@@ -673,7 +673,7 @@ namespace WindowsFormsApp1
             {
                 CC3++;
             }
-            if (CC3 == 20)
+            if (CC3 == rando)
             {
                 TEscudo = false;
                 CC3 = 0;
