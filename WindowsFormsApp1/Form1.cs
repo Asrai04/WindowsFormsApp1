@@ -27,6 +27,7 @@ namespace WindowsFormsApp1
         private MOTO Powerup_tiempo = new MOTO(-10, -10);
         private MOTO GASOLINA = new MOTO(-10, -10);
         private MOTO Escudo = new MOTO(-10, -10);
+        private MOTO Bomba = new MOTO(-10, -10);
 
         private MOTO motito = new MOTO(-10, -10);
         private MOTO h = new MOTO(-10, -10);
@@ -61,6 +62,7 @@ namespace WindowsFormsApp1
             BOT1C.Direcciones = "izquierda";
             BOT2C.Direcciones = "izquierda";
             Combustible = 100;
+            CC4 = 0;
     }
 
         BotConfig BOT1C = new BotConfig();
@@ -327,7 +329,10 @@ namespace WindowsFormsApp1
                         txtBomba.Text = "Hipervelocidad:" + CH;
                         ITEMS.Add(1);
                     }
-
+                    if (Jugador[i].X == Bomba.X && Jugador[i].Y == Bomba.Y && TEscudo == false)
+                    {
+                        GAMEOVER();
+                    }
                     for (int j = 1; j < Jugador.Count; j++)
                     {
 
@@ -416,7 +421,7 @@ namespace WindowsFormsApp1
                     for (int j = 0; j < Jugador.Count; j++)
                     {
 
-                        if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y)
+                        if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y || BOT1[i].X == Bomba.X && BOT1[i].Y == Bomba.Y)
                         {
                             for (int ll = BOT1.Count - 1; ll > 0; ll--)
                             {
@@ -926,6 +931,13 @@ namespace WindowsFormsApp1
                     Configuracion.Ancho,
                     Configuracion.Largo
                     ));
+            canvas.FillEllipse(Brushes.Orange, new Rectangle
+                    (
+                    Bomba.X * Configuracion.Ancho,
+                    Bomba.Y * Configuracion.Largo,
+                    Configuracion.Ancho,
+                    Configuracion.Largo
+                    ));
         }
 
         
@@ -1002,6 +1014,7 @@ namespace WindowsFormsApp1
             Escudo = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
             h = PREBA.optenerData();
             h = new MOTO (rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
+            Bomba = new MOTO(rand.Next(2, MaxWidth), rand.Next(2, MaxHeight));
 
             Timer_del_juego.Start();
             Combustible = 100;
