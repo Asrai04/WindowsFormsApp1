@@ -62,7 +62,6 @@ namespace WindowsFormsApp1
             BOT1C.Direcciones = "izquierda";
             BOT2C.Direcciones = "izquierda";
             Combustible = 100;
-            CC4 = 0;
     }
 
         BotConfig BOT1C = new BotConfig();
@@ -431,11 +430,11 @@ namespace WindowsFormsApp1
                                 txtScore.Text = "Score: " + score;
                             }
                         }
-                        if (BOT1[i].X == h.X && BOT1[i].Y == h.Y)
+                        if (BOT1[i].X == h.X && BOT1[i].Y == h.Y && BOT1_vivo == true)
                         {
                             CrecerStela(2);
                         }
-                        if (BOT1[i].X == Powerup2.X && BOT1[i].Y == Powerup2.Y)
+                        if (BOT1[i].X == Powerup2.X && BOT1[i].Y == Powerup2.Y && BOT1_vivo == true)
                         {
                             CrecerStela2(2);
                         }
@@ -498,11 +497,11 @@ namespace WindowsFormsApp1
                                 txtScore.Text = "Score: " + score;
                             }
                         }
-                        if (BOT2L[i].X == h.X && BOT2L[i].Y == h.Y)
+                        if (BOT2L[i].X == h.X && BOT2L[i].Y == h.Y && BOT2_vivo == true)
                         {
                             CrecerStela(3);
                         }
-                        if (BOT2L[i].X == Powerup2.X && BOT2L[i].Y == Powerup2.Y)
+                        if (BOT2L[i].X == Powerup2.X && BOT2L[i].Y == Powerup2.Y && BOT2_vivo == true)
                         {
                             CrecerStela2(3);
                         }
@@ -565,11 +564,11 @@ namespace WindowsFormsApp1
                                 txtScore.Text = "Score: " + score;
                             }
                         }
-                        if (BOT3L[i].X == h.X && BOT3L[i].Y == h.Y)
+                        if (BOT3L[i].X == h.X && BOT3L[i].Y == h.Y && BOT3_vivo == true)
                         {
                             CrecerStela(4);
                         }
-                        if (BOT3L[i].X == Powerup2.X && BOT3L[i].Y == Powerup2.Y)
+                        if (BOT3L[i].X == Powerup2.X && BOT3L[i].Y == Powerup2.Y && BOT3_vivo == true)
                         {
                             CrecerStela2(4);
                         }
@@ -632,11 +631,11 @@ namespace WindowsFormsApp1
                                 txtScore.Text = "Score: " + score;
                             }
                         }
-                        if (BOT4L[i].X == h.X && BOT4L[i].Y == h.Y)
+                        if (BOT4L[i].X == h.X && BOT4L[i].Y == h.Y && BOT4_vivo == true)
                         {
                             CrecerStela(5);
                         }
-                        if (BOT4L[i].X == Powerup2.X && BOT4L[i].Y == Powerup2.Y)
+                        if (BOT4L[i].X == Powerup2.X && BOT4L[i].Y == Powerup2.Y && BOT4_vivo == true)
                         {
                             CrecerStela2(5);
                         }
@@ -950,6 +949,8 @@ namespace WindowsFormsApp1
 
             Jugador.Clear();
             Boton_Start.Enabled = false;
+            CH = 0;
+            CI = 0;
 
             txtBomba.Text = "Hipervelocidad:" + CH;
             txtEscudo.Text = "Escudos:" + CI;
@@ -1019,8 +1020,6 @@ namespace WindowsFormsApp1
             Timer_del_juego.Start();
             Combustible = 100;
             CC = 0;
-            CH = 0;
-            CI = 0;
             TEscudo = false;
             Configuracion.Direcciones = "derecha";
         }
