@@ -945,7 +945,8 @@ namespace WindowsFormsApp1
         {
             MaxWidth = Fondo_Juego.Width / Configuracion.Ancho - 1;
             MaxHeight = Fondo_Juego.Height / Configuracion.Largo - 1;
-            Timer_del_juego.Interval = 40;
+            int Velocidad = rand.Next(40, 50);
+            Timer_del_juego.Interval = Velocidad;
 
             Jugador.Clear();
             Boton_Start.Enabled = false;
@@ -1028,10 +1029,11 @@ namespace WindowsFormsApp1
         {
 
             score = score + 50;
+            int tamano = rand.Next(1, 10);
             txtScore.Text = "Score: " + score;
             if (h2 == 1)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1044,7 +1046,7 @@ namespace WindowsFormsApp1
             }
             else if (h2 == 2)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1057,7 +1059,7 @@ namespace WindowsFormsApp1
             }
             else if (h2 == 3)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1070,7 +1072,7 @@ namespace WindowsFormsApp1
             }
             else if (h2 == 4)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1079,6 +1081,19 @@ namespace WindowsFormsApp1
                     };
 
                     BOT3L.Add(estela2);
+                }
+            }
+            else if (h2 == 5)
+            {
+                for (int i = 0; i < tamano; i++)
+                {
+                    MOTO estela2 = new MOTO(-10, -10)
+                    {
+                        X = BOT4L[BOT4L.Count - 1].X,
+                        Y = BOT4L[BOT4L.Count - 1].Y
+                    };
+
+                    BOT4L.Add(estela2);
                 }
             }
 
@@ -1090,10 +1105,11 @@ namespace WindowsFormsApp1
         {
 
             score = score + 50;
+            int tamano = rand.Next(1, 10);
             txtScore.Text = "Score: " + score;
             if (h3 == 1)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1106,7 +1122,7 @@ namespace WindowsFormsApp1
             }
             else if (h3 == 2) 
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1119,7 +1135,7 @@ namespace WindowsFormsApp1
             }
             else if (h3 == 3)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1132,7 +1148,7 @@ namespace WindowsFormsApp1
             }
             else if (h3 == 4)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < tamano; i++)
                 {
                     MOTO estela2 = new MOTO(-10, -10)
                     {
@@ -1141,6 +1157,19 @@ namespace WindowsFormsApp1
                     };
 
                     BOT3L.Add(estela2);
+                }
+            }
+            else if (h3 == 5)
+            {
+                for (int i = 0; i < tamano; i++)
+                {
+                    MOTO estela2 = new MOTO(-10, -10)
+                    {
+                        X = BOT4L[BOT4L.Count - 1].X,
+                        Y = BOT4L[BOT4L.Count - 1].Y
+                    };
+
+                    BOT4L.Add(estela2);
                 }
             }
 
