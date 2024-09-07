@@ -22,10 +22,5 @@ namespace WindowsFormsApp1
         {
             X = 10000;
         }
-        public void revivir()
-        {
-            X = 0;
-        }
     }
-
 }
