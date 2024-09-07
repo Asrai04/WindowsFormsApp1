@@ -420,7 +420,7 @@ namespace WindowsFormsApp1
                     for (int j = 0; j < Jugador.Count; j++)
                     {
 
-                        if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y || BOT1[i].X == Bomba.X && BOT1[i].Y == Bomba.Y)
+                        if (BOT1[i].X == Jugador[j].X && BOT1[i].Y == Jugador[j].Y || BOT1[i].X == Bomba.X && BOT1[i].Y == Bomba.Y )
                         {
                             for (int ll = BOT1.Count - 1; ll > 0; ll--)
                             {
@@ -438,6 +438,7 @@ namespace WindowsFormsApp1
                         {
                             CrecerStela2(2);
                         }
+
                     }
                 }
                 else
@@ -487,7 +488,7 @@ namespace WindowsFormsApp1
                     for (int j = 0; j < Jugador.Count; j++)
                     {
 
-                        if (BOT2L[i].X == Jugador[j].X && BOT2L[i].Y == Jugador[j].Y)
+                        if (BOT2L[i].X == Jugador[j].X && BOT2L[i].Y == Jugador[j].Y || BOT2L[i].X == Bomba.X && BOT2L[i].Y == Bomba.Y)
                         {
                             for (int ll = BOT2L.Count - 1; ll > 0; ll--)
                             {
@@ -554,7 +555,7 @@ namespace WindowsFormsApp1
                     for (int j = 0; j < Jugador.Count; j++)
                     {
 
-                        if (BOT3L[i].X == Jugador[j].X && BOT3L[i].Y == Jugador[j].Y)
+                        if (BOT3L[i].X == Jugador[j].X && BOT3L[i].Y == Jugador[j].Y || BOT3L[i].X == Bomba.X && BOT3L[i].Y == Bomba.Y)
                         {
                             for (int ll = BOT3L.Count - 1; ll > 0; ll--)
                             {
@@ -621,7 +622,7 @@ namespace WindowsFormsApp1
                     for (int j = 0; j < Jugador.Count; j++)
                     {
 
-                        if (BOT4L[i].X == Jugador[j].X && BOT4L[i].Y == Jugador[j].Y)
+                        if (BOT4L[i].X == Jugador[j].X && BOT4L[i].Y == Jugador[j].Y || BOT4L[i].X == Bomba.X && BOT4L[i].Y == Bomba.Y)
                         {
                             for (int ll = BOT4L.Count - 1; ll > 0; ll--)
                             {
