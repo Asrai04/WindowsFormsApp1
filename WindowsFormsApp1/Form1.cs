@@ -667,7 +667,7 @@ namespace WindowsFormsApp1
             {
                 CC2++;
             }
-            if (CC2 == rando)
+            if (CC2 == 25)
             {
                 Timer_del_juego.Interval = 40;
                 tempo_lento = false;
@@ -678,7 +678,7 @@ namespace WindowsFormsApp1
             {
                 CC3++;
             }
-            if (CC3 == rando)
+            if (CC3 == 25)
             {
                 TEscudo = false;
                 CC3 = 0;
@@ -970,7 +970,7 @@ namespace WindowsFormsApp1
             MOTO moto = new MOTO (5, 10);
             MOTO enemigo1 = new MOTO(70, 10);
             MOTO enemigo2 = new MOTO(5, 50);
-            MOTO enemigo3 = new MOTO(70, 50);
+            MOTO enemigo3 = new MOTO(20, 50);
             MOTO enemigo4 = new MOTO(30, 50);
             Jugador.Add(moto); // crear la moto
             BOT1.Add(enemigo1);
