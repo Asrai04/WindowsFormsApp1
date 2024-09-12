@@ -48,6 +48,8 @@ namespace WindowsFormsApp1
         int CC3;
         int CH;
         int CI;
+        int tlleva;
+        int CCTLLEVA;
 
         Random rand = new Random();
 
@@ -656,6 +658,7 @@ namespace WindowsFormsApp1
             {
                 Combustible--;
                 CC = 0;
+                CCTLLEVA++;
             }
             if (Combustible <= -1)
             {
@@ -682,6 +685,18 @@ namespace WindowsFormsApp1
             {
                 TEscudo = false;
                 CC3 = 0;
+            }
+            if (CCTLLEVA == 10)
+            {
+                tlleva--;
+                Timer_del_juego.Interval = tlleva;
+                txtScore.Text = "Velocidad:" + tlleva;
+                CCTLLEVA = 0;
+            }
+            if (BOT1_vivo == false && BOT2_vivo == false && BOT3_vivo == false && BOT4_vivo == false)
+            {
+                txtScore.Text = "You Win";
+                GAMEOVER();
             }
         }
 
@@ -946,8 +961,8 @@ namespace WindowsFormsApp1
         {
             MaxWidth = Fondo_Juego.Width / Configuracion.Ancho - 1;
             MaxHeight = Fondo_Juego.Height / Configuracion.Largo - 1;
-            int Velocidad = rand.Next(40, 50);
-            Timer_del_juego.Interval = Velocidad;
+            tlleva = rand.Next(40, 50);
+            Timer_del_juego.Interval = tlleva;
 
             Jugador.Clear();
             Boton_Start.Enabled = false;
@@ -1181,7 +1196,7 @@ namespace WindowsFormsApp1
         {
             CH--;
             Ttiempo = true;
-            Timer_del_juego.Interval = 20;
+            Timer_del_juego.Interval = tlleva/2;
             tempo_lento = false;
             txtBomba.Text = "Hipervelocidad:" + CH;
         }
